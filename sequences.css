@@ -135,3 +135,11 @@ button {
 	background: lightgreen;
 	border: none;
 }
+
+#me {
+    border-top: 0.1rem solid #aaa;
+    padding-top: 1em;
+    margin-top: 2em;
+    color: #aaa;
+    padding-bottom: 1em;
+}
