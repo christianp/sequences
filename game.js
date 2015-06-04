@@ -80,6 +80,9 @@ function GameDisplay(game) {
 		html.toggleClass('can-hoof',can_hoof);
 		html.toggleClass('run',data.run===true);
 		html.toggleClass('next-level',data.next_level===true);
+		stage_diff($('.score'),can_hoof ? data.score : null);
+		stage_diff($('.moves'),can_hoof ? data.moves : null);
+		stage_diff($('.level'),can_hoof && data.next_level ? 1 : null);
 		$('#hoof').attr('disabled',!can_hoof);
 	});
 
@@ -88,7 +91,7 @@ function GameDisplay(game) {
 	});
 
 	html.on('next-level',function(e,level) {
-		change_diff($('.level'),1);
+		change_diff($('.level'));
 	});
 
 	html.on('set-score',function(e,score) {
@@ -103,25 +106,26 @@ function GameDisplay(game) {
 		$('#moves').text(format_number(moves));
 	});
 	html.on('add-moves',function(e,moves) {
-		change_diff($('.moves'),moves);
-	});
-	$('.diff').on('transitionend',function() {
-		$(this).removeClass('changed');
+		change_diff($('.moves'));
 	});
 
 	html.on('end',function(e,data) {
 		html.addClass('end');
 		$('#final-score').html(format_number(data.score));
 	});
-	$('#end').on('transitionend',function() {
-		$('#end .message').show();
-	});
 	$('#restart').on('click',init);
 }
-function change_diff(selector,n) {
-	var text = (n>0 ? '+' : '')+format_number(n);
-	selector.find('.diff').text(text).addClass('changed');
-	selector.find('.diff-container').css('width',selector.find('.diff').width());
+function change_diff(selector) {
+	selector.find('.diff').removeClass('changed');
+}
+function stage_diff(selector,n) {
+	if(n===null) {
+		selector.find('.diff').removeClass('changed');
+	} else {
+		var text = (n>0 ? '+' : '')+format_number(n);
+		selector.find('.diff').text(text).addClass('changed');
+		selector.find('.diff-container').css('width',selector.find('.diff').width());
+	}
 }
 
 function Game() {
