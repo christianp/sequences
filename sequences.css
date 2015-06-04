@@ -47,11 +47,12 @@ button {
 	border: none;
 	width: 100%;
 	background: lightgreen;
+	transition: background-color 0.5s, color 0.5s;
 }	
 #hoof[disabled] {
 	opacity: 0.5;
 	background: #eee;
-	color: white;
+	color: #eee;
 }
 
 .block {
