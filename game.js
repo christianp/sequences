@@ -24,6 +24,9 @@ function factorial(n) {
 	return t;
 }
 function format_number(n) {
+	if(typeof(n)!='number') {
+		return n;
+	}
 	if(n<0) {
 		return '-'+format_number(-n);
 	}
