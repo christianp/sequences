@@ -153,7 +153,7 @@ function Game() {
 
 	this.set_level(5);
 	this.set_score(0);
-	this.set_moves(10);
+	this.set_moves(6);
 
 	this.can_hoof();
 }
@@ -241,6 +241,7 @@ Game.prototype = {
 			data.run = true;
 		}
 		data.next_level = data.max==this.level;
+		data.moves = data.next_level ? Math.floor(Math.sqrt(this.level)) : -1;
 		this.trigger('can-hoof',data);
 		return data;
 	},
@@ -255,10 +256,9 @@ Game.prototype = {
 		if(data.next_level) {
 			this.set_level(this.level+1);
 			this.trigger('next-level');
-			this.add_moves(2);
 		} else {
-			this.add_moves(-1);
 		}
+		this.add_moves(data.moves);
 
 		this.clicked.map(function(block) {
 			g.new_block(block.x,block.y);
