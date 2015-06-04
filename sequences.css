@@ -1,0 +1,135 @@
+html {
+	font-size: 48px;
+	font-family: sans-serif;
+}
+button {
+	font-size: 1em;
+}
+
+.unselectable {
+   -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+
+   -ms-user-select: none;
+   user-select: none;
+}
+
+@media screen and (min-width: 800px) {
+	body {
+		width: 800px;
+		margin: 0 auto;
+	}
+}
+
+#game {
+	margin: 0 auto;
+	position: relative;
+}
+
+.stat {
+	display: inline-block;
+	margin-bottom: 0.2em;
+}
+.stat:not(:last-child) {
+	margin-right: 1em;
+}
+.stat.score {
+	display: block;
+}
+
+#grid {
+	margin: 0 auto;
+}
+#hoof {
+	display: block;
+	margin: 0.1em auto 0 auto;
+	border: none;
+	width: 100%;
+	background: lightgreen;
+}	
+#hoof[disabled] {
+	opacity: 0.5;
+	background: #eee;
+	color: white;
+}
+
+.block {
+	width: 2rem;
+	height: 2rem;
+	line-height: 2em;
+	text-align: center;
+	font-family: sans-serif;
+	background: #eee;
+	cursor: pointer;
+}
+.block.clicked {
+	background: #777;
+	transition: background-color 0.5s;
+}
+#game.can-hoof .block.clicked, #game.can-hoof #hoof {
+	background: lightgreen;
+}
+#game.run .block.clicked {
+	animation-name: wobble;
+	animation-duration: 0.2s;
+	animation-iteration-count: infinite;
+}
+#game.can-hoof.next-level .block.clicked, #game.can-hoof.next-level #hoof {
+	background: yellow;
+}
+@keyframes wobble {
+	0% {
+		transform: rotate(3deg)
+	}
+	50% {
+		transform: rotate(-3deg);
+	}
+	100% {
+		transform: rotate(3deg);
+	}
+}
+
+.diff-container {
+	position: relative;
+	overflow: hidden;
+	height: 1em;
+	display: inline-block;
+	vertical-align: top;
+}
+.diff.changed { 
+	opacity: 1;
+	transition: opacity 0.5s;
+	left: 0;
+}
+.diff {
+	color: red;
+	position: absolute;
+
+	opacity: 0;
+	top: 0;
+	transition: opacity 1s, left 1s;
+}
+
+#end {
+	opacity: 0;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: white;
+	color: black;
+	z-index: -1;
+}
+#game.end #end {
+	opacity: 1;
+	transition: opacity 1s;
+	z-index: 2;
+}
+
+#restart {
+	display: block;
+	margin: 1em auto 0;
+	padding: 0.5em;
+	background: lightgreen;
+	border: none;
+}

@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Sequences, by cp</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+		<script src="jquery.js"></script>
+		<script src="game.js"></script>
+		<link rel="stylesheet" type="text/css" href="sequences.css"></link>
+	</head>
+	<body>
+	<h1>Sequences</h1>
+		<div id="game">
+			<div id="end">
+				<div class="message">
+					<h2>Game over!</h2>
+					<p>Your score was <span id="final-score"></span></p>
+					<button id="restart">Play again</button>
+				</div>
+			</div>
+			<div class="stats">
+				<div class="stat level">
+					Level: <span id="level"></span>
+					<span class="diff-container"><span class="diff"></span></span>
+				</div>
+				<div class="stat moves">
+					Moves: <span id="moves"></span>
+					<span class="diff-container"><span class="diff"></span></span>
+				</div>
+				<div class="stat score">
+					Score: <span id="score"></span> 
+					<span class="diff-container"><span class="diff"></span></span>
+				</div>
+			</div>
+			<table id="grid" class="unselectable">
+			</table>
+			<button id="hoof">Hoof</button>
+		</div>
+
+		<div id="instructions">
+			<h2>How to play</h2>
+			<p>Find a sequence of at least three evenly-spaced numbers.</p>
+			<p>Longer sequences with bigger gaps earn more points.</p>
+		</div>
+	</body>
+</html>
