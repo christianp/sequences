@@ -1,4 +1,9 @@
+var owidth = window.innerWidth;
 function resize() {
+	if(window.innerWidth==owidth) {
+		return;
+	}
+	owidth = window.innerWidth;
 	var w = Math.min(window.innerWidth,window.innerHeight);
 	if(w>=48*12) {
 		var size = '48px';
