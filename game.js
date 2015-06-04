@@ -1,4 +1,4 @@
-var owidth = window.innerWidth;
+var owidth = null;
 function resize() {
 	if(window.innerWidth==owidth) {
 		return;
