@@ -168,6 +168,42 @@ Game.prototype = {
 	moves: 10,
 	ended: false,
 
+	save: function() {
+		var data;
+		var data = {
+			ended: this.ended,
+			level: this.level,
+			score: this.score,
+			moves: this.moves
+		};
+		data.cells = this.cells.map(function(r) {
+			return r.map(function(b){return b.value;})
+		});
+
+		if(window.localStorage) {
+			localStorage.sequences_save = JSON.stringify(data);
+		}
+	},
+
+	load: function() {
+		if(!window.localStorage || !('sequences_save' in window.localStorage)) {
+			return;
+		}
+		var data = JSON.parse(localStorage.sequences_save);
+		if(data.ended) {
+			return;
+		}
+		this.set_level(data.level);
+		this.set_score(data.score);
+		this.set_moves(data.moves);
+		for(var y=0;y<data.cells.length;y++) {
+			for(var x=0;x<data.cells.length;x++) {
+				var block = this.cells[y][x] = new Block(this,data.cells[y][x],x,y);
+				this.trigger('new-block',block);
+			}
+		}
+	},
+
 	trigger: function(name,data) {
 		this.display.html.trigger(name,data);
 	},
@@ -198,6 +234,7 @@ Game.prototype = {
 	end: function() {
 		this.ended = true;
 		this.trigger('end',{score:this.score,level:this.level});
+		this.save();
 	},
 
 	add_moves: function(moves) {
@@ -271,6 +308,7 @@ Game.prototype = {
 		});
 		this.clicked = [];
 		this.can_hoof();
+		this.save();
 	},
 }
 
@@ -291,4 +329,8 @@ function init() {
 	var game = window.game = new Game();
 }
 
-$(document).ready(init);
+$(document).ready(function() {
+	init();
+	game.load();
+	game.save();
+});
