@@ -63,6 +63,7 @@ button {
 	font-family: sans-serif;
 	background: #eee;
 	cursor: pointer;
+	border-radius: 0.125em;
 }
 .block.clicked {
 	background: #777;
@@ -109,7 +110,7 @@ button {
 
 	opacity: 0;
 	top: 0;
-	transition: opacity 1s, left 1s;
+	transition: opacity 1s;
 }
 
 #end {
