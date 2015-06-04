@@ -112,6 +112,7 @@ function GameDisplay(game) {
 	html.on('end',function(e,data) {
 		html.addClass('end');
 		$('#final-score').html(format_number(data.score));
+		$('#final-level').html(format_number(data.level));
 	});
 	$('#restart').on('click',init);
 }
@@ -191,7 +192,7 @@ Game.prototype = {
 
 	end: function() {
 		this.ended = true;
-		this.trigger('end',{score:this.score});
+		this.trigger('end',{score:this.score,level:this.level});
 	},
 
 	add_moves: function(moves) {
