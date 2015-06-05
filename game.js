@@ -72,7 +72,7 @@ function GameDisplay(game) {
 	}
 	$('#hoof').on('click',function() { game.hoof(); });
 	html.on('new-block',function(e,block) {
-		var html = $('<div class="block">').html(block.value);
+		var html = $('<div class="block">').attr('data-value',block.value%5).html(block.value);
 		html.on('click',function() {game.click_block(block);});
 		grid.find('tr').eq(block.y).find('td').eq(block.x).html(html);
 	});

@@ -50,7 +50,7 @@ button {
 	transition: background-color 0.5s, color 0.5s;
 }	
 #hoof[disabled] {
-	opacity: 0.5;
+	opacity: 0;
 	background: #eee;
 	color: #eee;
 }
@@ -64,21 +64,36 @@ button {
 	background: #eee;
 	cursor: pointer;
 	border-radius: 0.125em;
+	animation-name: fadein;
+	animation-duration: 1s;
 }
+@keyframes fadein {
+	0% { opacity: 0; }
+	20% {opacity: 0; }
+	100% { opacity: 1; }
+}
+.block[data-value="1"] { background-color: #d3e2b6; }
+.block[data-value="2"] { background-color: #c3dbb4; }
+.block[data-value="3"] { background-color: #aaccb1; }
+.block[data-value="4"] { background-color: #87bdb1; }
+.block[data-value="0"] { background-color: #68b3af; }
+
 .block.clicked {
-	background: #777;
-	transition: background-color 0.5s;
+	background: #444;
+	color: white;
+	transition: background-color 0.3s, color 0.3s;
 }
 #game.can-hoof .block.clicked, #game.can-hoof #hoof {
-	background: lightgreen;
+	background: #005;
+	color: white;
 }
-#game.run .block.clicked {
+#game.can-hoof.run .block.clicked, #game.can-hoof.run #hoof {
+	background: hsl(300,100%,40%);
+}
+#game.can-hoof.next-level .block.clicked {
 	animation-name: wobble;
 	animation-duration: 0.2s;
 	animation-iteration-count: infinite;
-}
-#game.can-hoof.next-level .block.clicked, #game.can-hoof.next-level #hoof {
-	background: yellow;
 }
 @keyframes wobble {
 	0% {
