@@ -158,7 +158,7 @@ button {
 	z-index: 2;
 }
 
-#restart {
+.restart {
 	display: block;
 	margin: 1em auto 0;
 	padding: 0.5em;

@@ -153,7 +153,7 @@ function GameDisplay(game) {
 		$('#final-level').html(format_number(data.level));
 		$('#new-high-score-message').toggle(data.high_score);
 	});
-	$('#restart').on('click',init);
+	$('.restart').on('click',init);
 }
 function change_diff(selector) {
 	selector.find('.diff').removeClass('changed');
