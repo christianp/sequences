@@ -49,7 +49,6 @@ button {
 	display: block;
 }
 #game.high-score #high-score, #game.high-score #score {
-	animation: high-score 0.5s infinite ease-in-out alternate;
 	color: red;
 }
 
@@ -182,10 +181,9 @@ button {
 }
 @keyframes high-score {
 	0% {
-		text-shadow: 0 0 0.3em hsl(0,100%,70%);
+		color: black;
 	}
 	100% {
-		text-shadow: 0 0 0 hsl(0,100%,70%);
+		color: red;
 	}
-}
 }
