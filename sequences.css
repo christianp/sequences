@@ -79,8 +79,6 @@ button {
 	background: #eee;
 	cursor: pointer;
 	border-radius: 0.125em;
-	animation-name: fadein;
-	animation-duration: 1s;
 }
 @keyframes fadein {
 	0% { opacity: 0; }
@@ -92,6 +90,11 @@ button {
 .block[data-value="3"] { background-color: #aaccb1; }
 .block[data-value="4"] { background-color: #87bdb1; }
 .block[data-value="0"] { background-color: #68b3af; }
+
+.block.new {
+	animation-name: fadein;
+	animation-duration: 1s;
+}
 
 .block.clicked {
 	background: #444;

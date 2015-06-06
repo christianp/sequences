@@ -98,13 +98,17 @@ function GameDisplay(game) {
 	}
 	$('#hoof').on('click',function() { game.hoof(); });
 	html.on('new-block',function(e,block) {
-		var html = $('<div class="block">').attr('data-value',block.value%5).html(block.value);
+		var html = $('<div class="block">')
+					.attr('data-value',block.value%5)
+					.addClass('new')
+					.html(block.value);
 		html.on('click',function() {game.click_block(block);});
 		grid.find('tr').eq(block.y).find('td').eq(block.x).html(html);
 	});
 	html.on('block-clicked',function(e,block) {
-		var html = grid.find('tr').eq(block.y).find('td').eq(block.x).find('.block')
-		html.toggleClass('clicked',block.clicked);
+		var block_html = grid.find('tr').eq(block.y).find('td').eq(block.x).find('.block')
+		block_html.toggleClass('clicked',block.clicked);
+		block_html.removeClass('new');
 	});
 	html.on('can-hoof',function(e,data) {
 		var can_hoof = data!==false;
