@@ -1,3 +1,28 @@
+var sequences_data = {
+	high_score: 0
+}
+
+
+function getLocalStorage(key) {
+	if(window.localStorage) {
+		var data = window.localStorage[key];
+		if(!data) {
+			return data;
+		} else {
+			return JSON.parse(data);
+		}
+	} else {
+		return;
+	}
+}
+function setLocalStorage(key,data) {
+	if(!window.localStorage) {
+		return false;
+	} else {
+		localStorage[key] = JSON.stringify(data);
+	}
+}
+
 var owidth = null;
 function resize() {
 	if(window.innerWidth==owidth) {
@@ -59,9 +84,10 @@ function GameDisplay(game) {
 	resize();
 	this.game = game;
 	var html = this.html = $('#game');
-	html.removeClass('end');
+	html.attr('class','');
 	var grid = html.find('#grid');
 	grid.html('');
+	$('#high-score').text(format_number(sequences_data.high_score));
 	for(var y=0;y<this.game.height;y++) {
 		var tr = document.createElement('tr');
 		for(var x=0;x<this.game.width;x++) {
@@ -83,7 +109,6 @@ function GameDisplay(game) {
 	html.on('can-hoof',function(e,data) {
 		var can_hoof = data!==false;
 		html.toggleClass('can-hoof',can_hoof);
-		html.toggleClass('run',data.run===true);
 		html.toggleClass('next-level',data.next_level===true);
 		stage_diff($('.score'),can_hoof ? data.score : null);
 		stage_diff($('.moves'),can_hoof ? data.moves : null);
@@ -107,6 +132,10 @@ function GameDisplay(game) {
 			change_diff($('.score'),diff);
 		}
 	})
+	html.on('high-score',function(e,score) {
+		$('#high-score').text(format_number(score));
+		html.addClass('high-score');
+	});
 	html.on('set-moves',function(e,moves) {
 		$('#moves').text(format_number(moves));
 	});
@@ -118,6 +147,7 @@ function GameDisplay(game) {
 		html.addClass('end');
 		$('#final-score').html(format_number(data.score));
 		$('#final-level').html(format_number(data.level));
+		$('#new-high-score-message').toggle(data.high_score);
 	});
 	$('#restart').on('click',init);
 }
@@ -166,6 +196,7 @@ function Game() {
 Game.prototype = {
 	level: 5,
 	moves: 10,
+	high_score: false,
 	ended: false,
 
 	save: function() {
@@ -180,16 +211,16 @@ Game.prototype = {
 			return r.map(function(b){return b.value;})
 		});
 
-		if(window.localStorage) {
-			localStorage.sequences_save = JSON.stringify(data);
-		}
+		setLocalStorage('sequences_save',data);
+		setLocalStorage('sequences',sequences_data);
 	},
 
 	load: function() {
-		if(!window.localStorage || !('sequences_save' in window.localStorage)) {
+		var data = getLocalStorage('sequences_save');
+		if(!data) {
 			return;
 		}
-		var data = JSON.parse(localStorage.sequences_save);
+
 		if(data.ended) {
 			return;
 		}
@@ -216,6 +247,11 @@ Game.prototype = {
 	set_score: function(score) {
 		this.score = score;
 		this.trigger('set-score',this.score);
+		if(this.score>sequences_data.high_score) {
+			sequences_data.high_score = this.score;
+			this.high_score = true;
+			this.trigger('high-score',this.score);
+		}
 	},
 
 	add_score: function(diff) {
@@ -233,7 +269,7 @@ Game.prototype = {
 
 	end: function() {
 		this.ended = true;
-		this.trigger('end',{score:this.score,level:this.level});
+		this.trigger('end',{score:this.score,level:this.level,high_score: this.high_score});
 		this.save();
 	},
 
@@ -279,10 +315,6 @@ Game.prototype = {
 		}
 		var max = data.max = values[num_blocks-1];
 		data.score = Math.pow(diff,num_blocks)*max;
-		if(max==this.level && diff==1 && max==num_blocks) {	// if selection is the run 1..max
-			data.score = Math.pow(max,3);
-			data.run = true;
-		}
 		data.next_level = data.max==this.level;
 		data.moves = data.next_level ? Math.floor(Math.sqrt(this.level)) : -1;
 		this.trigger('can-hoof',data);
@@ -330,6 +362,10 @@ function init() {
 }
 
 $(document).ready(function() {
+	var data = getLocalStorage('sequences');
+	if(data) {
+		sequences_data = data;
+	}
 	init();
 	game.load();
 	game.save();

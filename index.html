@@ -14,27 +14,31 @@
 				<div class="message">
 					<h2>Game over!</h2>
 					<p>Your score was <span id="final-score"></span></p>
+					<p id="new-high-score-message">New high score!</p>
 					<p>You reached level <span id="final-level"></span></p>
 					<button id="restart">Play again</button>
-				</div>
-			</div>
-			<div class="stats">
-				<div class="stat level">
-					Level: <span id="level"></span>
-					<span class="diff-container"><span class="diff"></span></span>
-				</div>
-				<div class="stat moves">
-					Moves: <span id="moves"></span>
-					<span class="diff-container"><span class="diff"></span></span>
-				</div>
-				<div class="stat score">
-					Score: <span id="score"></span> 
-					<span class="diff-container"><span class="diff"></span></span>
 				</div>
 			</div>
 			<table id="grid" class="unselectable">
 			</table>
 			<button id="hoof">Go</button>
+			<div class="stats">
+				<div class="stat level">
+					<label>Level:</label> <span id="level"></span>
+					<span class="diff-container"><span class="diff"></span></span>
+				</div>
+				<div class="stat moves">
+					<label>Moves:</label> <span id="moves"></span>
+					<span class="diff-container"><span class="diff"></span></span>
+				</div>
+				<div class="stat score">
+					<label>Score:</label> <span id="score"></span> 
+					<span class="diff-container"><span class="diff"></span></span>
+				</div>
+				<div class="stat high-score">
+					<label>High score:</label> <span id="high-score"></span>
+				</div>
+			</div>
 		</div>
 
 		<div id="instructions">

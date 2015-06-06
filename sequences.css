@@ -27,6 +27,10 @@ button {
 	position: relative;
 }
 
+.stats {
+	margin-top: 0.2em;
+}
+
 .stat {
 	display: inline-block;
 	margin-bottom: 0.2em;
@@ -36,6 +40,10 @@ button {
 }
 .stat.score {
 	display: block;
+}
+#game.high-score #high-score, #game.high-score #score {
+	animation: high-score 0.5s infinite ease-in-out alternate;
+	color: red;
 }
 
 #grid {
@@ -86,9 +94,6 @@ button {
 #game.can-hoof .block.clicked, #game.can-hoof #hoof {
 	background: #005;
 	color: white;
-}
-#game.can-hoof.run .block.clicked, #game.can-hoof.run #hoof {
-	background: hsl(300,100%,40%);
 }
 #game.can-hoof.next-level .block.clicked {
 	animation-name: wobble;
@@ -157,4 +162,19 @@ button {
     margin-top: 2em;
     color: #aaa;
     padding-bottom: 1em;
+}
+
+#new-high-score-message {
+	animation: high-score 0.6s infinite ease-in-out alternate;
+	color: red;
+    margin: 0;
+}
+@keyframes high-score {
+	0% {
+		text-shadow: 0 0 0.3em hsl(0,100%,70%);
+	}
+	100% {
+		text-shadow: 0 0 0 hsl(0,100%,70%);
+	}
+}
 }
