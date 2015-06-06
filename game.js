@@ -82,9 +82,12 @@ var by_value = key_sort('value');
 
 function GameDisplay(game) {
 	resize();
+
 	this.game = game;
+
 	var html = this.html = $('#game');
 	html.attr('class','');
+
 	var grid = html.find('#grid');
 	grid.html('');
 	$('#high-score').text(format_number(sequences_data.high_score));
@@ -96,20 +99,27 @@ function GameDisplay(game) {
 		}
 		grid.append(tr);
 	}
-	$('#hoof').on('click',function() { game.hoof(); });
+
+	$('#hoof').off('click').on('click',function() { game.hoof(); });
+	$('.restart').off('click').on('click',function() {
+		game.restart()
+	});
+
 	html.on('new-block',function(e,block) {
-		var html = $('<div class="block">')
+		var block_html = $('<div class="block">')
 					.attr('data-value',block.value%5)
 					.addClass('new')
 					.html(block.value);
-		html.on('click',function() {game.click_block(block);});
-		grid.find('tr').eq(block.y).find('td').eq(block.x).html(html);
+		block_html.on('click',function() {game.click_block(block);});
+		grid.find('tr').eq(block.y).find('td').eq(block.x).html(block_html);
 	});
+
 	html.on('block-clicked',function(e,block) {
 		var block_html = grid.find('tr').eq(block.y).find('td').eq(block.x).find('.block')
 		block_html.toggleClass('clicked',block.clicked);
 		block_html.removeClass('new');
 	});
+
 	html.on('can-hoof',function(e,data) {
 		var can_hoof = data!==false;
 		html.toggleClass('can-hoof',can_hoof);
@@ -153,7 +163,6 @@ function GameDisplay(game) {
 		$('#final-level').html(format_number(data.level));
 		$('#new-high-score-message').toggle(data.high_score);
 	});
-	$('.restart').on('click',init);
 }
 function change_diff(selector) {
 	selector.find('.diff').removeClass('changed');
@@ -346,6 +355,15 @@ Game.prototype = {
 		this.can_hoof();
 		this.save();
 	},
+
+	restart: function() {
+		if(!this.ended) {
+			if(!confirm("Are you sure you want to restart?")) {
+				return;
+			}
+		}
+		init();
+	}
 }
 
 function Block(game,value,x,y) {
