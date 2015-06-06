@@ -30,10 +30,10 @@ function resize() {
 	}
 	owidth = window.innerWidth;
 	var w = Math.min(window.innerWidth,window.innerHeight);
-	if(w>=48*12) {
+	if(w>=48*13) {
 		var size = '48px';
 	} else {
-		size = w/12;
+		size = w/13;
 	}
 	$('html').css('font-size',size);
 }
